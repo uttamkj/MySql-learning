@@ -38,3 +38,26 @@ FROM employees
 GROUP BY email
 HAVING duplicate_email_count > 1;
  
+
+-- Q16: Find the department with the highest average salary.
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+ORDER BY avg_salary DESC
+LIMIT 1;
+
+-- Q17: Find the city with the lowest average salary.
+SELECT city, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY city
+ORDER BY avg_salary ASC
+LIMIT 1;
+
+-- Q18: Find the top 3 highest-paid employees in each department.
+SELECT department, name, salary
+FROM (
+    SELECT department, name, salary,
+           ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
+    FROM employees
+) AS ranked_employees
+WHERE rank <= 3;
