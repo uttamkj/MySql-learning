@@ -81,3 +81,9 @@ SELECT p.project_id,
 FROM projects p
 LEFT JOIN employee_projects ep ON p.project_id = ep.project_id
 WHERE ep.project_id IS NULL;
+
+SELECT c.client_name,
+       COUNT(c.client_id) AS total_number_Orders
+FROM clients c
+LEFT JOIN orders_data o ON c.client_id = o.client_id
+GROUP BY c.client_id;
