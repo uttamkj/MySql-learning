@@ -59,6 +59,55 @@ GROUP BY DATE_FORMAT(watch_date, '%Y-%m')
 ORDER BY month;
 
 
+-- Q5 — Trip cancellation rate per city
+SELECT * from trips;
+CREATE TABLE trips (
+    trip_id INT PRIMARY KEY,
+    city VARCHAR(30),
+    rider_id INT,
+    driver_id INT,
+    trip_status VARCHAR(20)  -- COMPLETED, CANCELLED_BY_RIDER, CANCELLED_BY_DRIVER
+);
+
+INSERT INTO trips VALUES
+(1,'Mumbai',1,10,'COMPLETED'),
+(2,'Mumbai',2,11,'CANCELLED_BY_RIDER'),
+(3,'Mumbai',3,10,'COMPLETED'),
+(4,'Mumbai',4,12,'CANCELLED_BY_DRIVER'),
+(5,'Delhi',5,13,'COMPLETED'),
+(6,'Delhi',6,14,'COMPLETED'),
+(7,'Delhi',7,13,'CANCELLED_BY_RIDER'),
+(8,'Pune',8,15,'COMPLETED');
+
+SELECT city, 
+		count(*) as total_trips,
+        sum(CASE WHEN trip_status LIKE 'CANCELLED%' THEN 1 ELSE 0 END ) as total_cancelled_trips,
+        round((sum(CASE WHEN trip_status LIKE 'CANCELLED%' THEN 1 ELSE 0 END )*100 )/count(*) ,2) as percentage_cancelled
+from trips
+GROUP BY city;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
